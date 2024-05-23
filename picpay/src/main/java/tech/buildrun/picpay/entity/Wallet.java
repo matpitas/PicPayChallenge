@@ -54,6 +54,22 @@ public class Wallet {
     @JoinColumn(name = "wallet_type_id")
     private WalletType walletType;
 
+    public boolean isTransferAllowedForWalletType() {
+        return this.walletType.equals(WalletType.Enum.USER.get());
+    }
+    
+    public boolean isBalanceEqualOrGreaterThan(BigDecimal value) {
+        return this.balance.doubleValue() >= value.doubleValue();
+    }
+
+    public void debit(BigDecimal value) {
+        this.balance = this.balance.subtract(value);
+    }
+
+    public void credit(BigDecimal value){
+        this.balance = this.balance.add(value);
+    }
+
     public Long getId() {
         return id;
     }
@@ -110,6 +126,5 @@ public class Wallet {
         this.walletType = walletType;
     }
 
-    
 
 }
